@@ -146,4 +146,8 @@ class Graph{
 	    {
 	    }                                             
     }    
+    
+    public int getV() {
+    	return this.V;
+    }
 }
