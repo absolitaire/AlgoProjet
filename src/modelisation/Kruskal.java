@@ -7,11 +7,13 @@ import java.util.Set;
 
 public class Kruskal {
 	
-	public final int[] premiers = {2  , 3  , 5  , 7  , 11 , 13 , 17 , 19 , 23 , 29 , 31 , 37 , 41 };
+	public final int[] premiers = {2  , 3  , 5  , 7 , 11 , 13 , 17 , 19 , 23 , 29 , 31 , 37 , 41, 
+			 43 , 47 , 53 , 59 , 61 , 67 , 71 , 73 , 79 , 83 , 89 , 97 , 101, 103, 107, 109, 113,
+			127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229};
 
 	public static void main(String[] args){
 		//new Kruskal().kruskal2HashCode(Graph.example());
-		new Kruskal().kruskalXFois(1000);;
+		new Kruskal().kruskalXFois(1000000);;
 	}
 
 	public void kruskal(Graph g){
@@ -217,4 +219,12 @@ public class Kruskal {
 			System.out.println("arbre de code "+i+" : "+stats.get(i));
 		}
 	}
+	
+	
+	
+
+	
+	
+	
+	
 }
