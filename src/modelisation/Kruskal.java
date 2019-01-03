@@ -185,7 +185,10 @@ public class Kruskal {
 				trace.add(e2.to);	
 			}
 			if(trace.contains(origine) && trace.contains(destination)) {
-				ajouter = false;
+				if(!verifierSeparation(e, arbre)) {
+					ajouter = false;
+					//System.out.println("cut de "+e.from+"---"+e.to);
+				}
 				//System.out.println("cut de "+e.from+"---"+e.to);
 			}	
 			if(ajouter) {
