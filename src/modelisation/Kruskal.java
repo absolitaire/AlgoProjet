@@ -2,6 +2,9 @@ package modelisation;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Set;
 
 public class Kruskal {
 
@@ -101,8 +104,11 @@ public class Kruskal {
 				trace.add(e2.to);	
 			}
 			if(trace.contains(origine) && trace.contains(destination)) {
-				ajouter = false;
-				System.out.println("cut de "+e.from+"---"+e.to);
+				if(!verifierSeparation(e, arbre)) {
+					ajouter = false;
+					System.out.println("cut de "+e.from+"---"+e.to);
+				}
+				
 			}	
 			if(ajouter) {
 				System.out.println("ajout de "+e.from+"---"+e.to);
@@ -111,4 +117,46 @@ public class Kruskal {
 		}
 		return arbre;
 	}
+	
+	public boolean verifierSeparation(Edge ed, ArrayList<Edge> arbre) {
+		HashMap<Edge,Boolean> verification = new HashMap<Edge,Boolean >();
+		ArrayList<Integer> trace = new ArrayList<Integer>();
+		boolean modification = true;
+		for (Edge e : arbre) {
+			if(modification) {
+				verification.put(e, true);
+				trace.add(e.from);
+				trace.add(e.to);
+				modification = false;
+			}else {
+				verification.put(e, false);
+			}
+		}
+		modification = true;
+		Set<Edge> iterator = verification.keySet();
+		while(modification) {
+			modification = false;
+			for(Edge e2: iterator) {
+				if(! verification.get(e2)) {
+					if(trace.contains(e2.from) || trace.contains(e2.to) ) {
+						trace.add(e2.from);
+						trace.add(e2.to);
+						verification.put(e2, true);
+						modification = true;
+					}
+				}
+			}
+		}
+		if(trace.contains(ed.from) && trace.contains(ed.to)) {		
+			return false;
+		}else {
+			return true;
+		}
+	}
 }
+
+
+
+
+
+
