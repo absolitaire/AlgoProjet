@@ -3,13 +3,15 @@ package modelisation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Set;
 
 public class Kruskal {
+	
+	public final int[] premiers = {2  , 3  , 5  , 7  , 11 , 13 , 17 , 19 , 23 , 29 , 31 , 37 , 41 };
 
 	public static void main(String[] args){
-		new Kruskal().kruskal2(Graph.example());
+		//new Kruskal().kruskal2HashCode(Graph.example());
+		new Kruskal().kruskalXFois(1000);;
 	}
 
 	public void kruskal(Graph g){
@@ -153,10 +155,63 @@ public class Kruskal {
 			return true;
 		}
 	}
+	
+		public int kruskal2HashCode(Graph g){
+		ArrayList<Edge> list = g.edges();
+		ArrayList<Edge> arbre = new ArrayList<Edge>();
+		ArrayList<Integer> trace = new ArrayList<Integer>();
+		HashMap<Edge,Integer> edgeId = new HashMap<Edge,Integer>();
+		boolean ajouter;
+		int origine, destination;
+		int premiersId = -1;
+		int hashCode = 1;
+
+		for(Edge e : list){
+			premiersId++;
+			edgeId.put(e, premiers[premiersId]);
+		}
+		
+		Collections.shuffle(list);
+		
+		for(Edge e : list){
+			
+			
+			origine = e.from;
+			destination = e.to;
+			ajouter = true;
+			//System.out.println("Origine "+origine +" | Destination "+destination);
+			for(Edge e2: arbre) {
+				trace.add(e2.from);
+				trace.add(e2.to);	
+			}
+			if(trace.contains(origine) && trace.contains(destination)) {
+				ajouter = false;
+				//System.out.println("cut de "+e.from+"---"+e.to);
+			}	
+			if(ajouter) {
+			//	System.out.println("ajout de "+e.from+"---"+e.to);
+				arbre.add(e);
+				hashCode = hashCode * edgeId.get(e);
+			}
+		}
+		//System.out.println(hashCode);
+		return hashCode;
+		//return arbre;
+	}
+	public void kruskalXFois(int nb){
+		HashMap<Integer,Integer> stats = new HashMap<Integer,Integer>();
+		Integer resultat;
+		for(int i = 0; i < nb; i++){
+			resultat = kruskal2HashCode(Graph.example());
+			if(stats.containsKey(resultat)){
+				stats.put(resultat, stats.get(resultat) +1);
+			}else{
+				stats.put(resultat, 1);
+			}
+			
+		}
+		for(Integer i : stats.keySet()){
+			System.out.println("arbre de code "+i+" : "+stats.get(i));
+		}
+	}
 }
-
-
-
-
-
-
