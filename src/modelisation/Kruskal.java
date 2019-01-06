@@ -153,8 +153,11 @@ public class Kruskal {
 		}
 		if(trace.contains(ed.from) && trace.contains(ed.to)) {		
 			return false;
-		}else {
+		}
+		if((trace.contains(ed.from) && ! trace.contains(ed.to)) || (!trace.contains(ed.from) && trace.contains(ed.to))) {		
 			return true;
+		}else{
+			return false;
 		}
 	}
 	
