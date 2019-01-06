@@ -6,90 +6,18 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Kruskal {
-	
-	public final int[] premiers = {2  , 3  , 5  , 7 , 11 , 13 , 17 , 19 , 23 , 29 , 31 , 37 , 41, 
-			 43 , 47 , 53 , 59 , 61 , 67 , 71 , 73 , 79 , 83 , 89 , 97 , 101, 103, 107, 109, 113,
+
+	public static final int[] premiers = {2  , 3  , 5  , 7 , 11 , 13 , 17 , 19 , 23 , 29 , 31 , 37 , 41, 
+			43 , 47 , 53 , 59 , 61 , 67 , 71 , 73 , 79 , 83 , 89 , 97 , 101, 103, 107, 109, 113,
 			127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229};
 
 	public static void main(String[] args){
 		//new Kruskal().kruskal2HashCode(Graph.example());
-		new Kruskal().kruskalXFois(1000000);;
+		kruskalXFois(1000000);;
 	}
 
-	public void kruskal(Graph g){
-		ArrayList<Edge> list = g.edges();
-		ArrayList<Edge> arbre = new ArrayList<Edge>();
-		ArrayList<Integer> trace = new ArrayList<Integer>();
-		ArrayList<Integer> trace2 = new ArrayList<Integer>();
-		boolean ajouter;
-		int origine, destination;
 
-		Collections.shuffle(list);
-		
-		for(Edge e : list){
-			origine = e.from;
-			destination = e.to; //System.out.println(destination);
-			ajouter = true;
-			int point;
-
-			trace2.clear();
-			trace.clear(); //g.adj(origine)
-			for(Edge edg : arbre){
-				if(edg.from == origine){
-					//System.out.println(edg.to);
-					trace.add(edg.to);
-				}else{
-					//System.out.println(edg.from);
-					trace.add(edg.from);					
-				}
-			}
-
-			while(!trace.isEmpty() && ajouter == true){
-				point = trace.remove(0);
-				if(point == destination){
-					ajouter = false;
-					trace.clear();
-					System.out.println("cut from"+e.from+" to "+e.to+"  origine "+origine+" destination  "+destination);
-					
-				}else{//g.adj(point)
-					for(Edge edg : arbre){
-						if(edg.from == point){
-							if(!trace2.contains(edg.to)){
-								trace.add(edg.to);
-								trace2.add(edg.to);
-								if(point == edg.to){
-									ajouter = false;
-									trace.clear();
-									System.out.println("cut2");
-
-								}
-							}
-
-						}else{
-							if(!trace2.contains(edg.from)){
-								trace.add(edg.from);
-								trace2.add(edg.from);	
-								if(point == edg.from){
-									ajouter = false;
-									trace.clear();
-									System.out.println("cut3");
-
-								}
-							}
-						}
-					}
-				}
-
-			}
-			if(ajouter){
-				arbre.add(e);
-				System.out.println("-------------"+e.from+" "+e.to);
-			}
-		}
-
-	}
-	
-	public ArrayList<Edge> kruskal2(Graph g){
+	public static ArrayList<Edge> kruskal(Graph g){
 		ArrayList<Edge> list = g.edges();
 		ArrayList<Edge> arbre = new ArrayList<Edge>();
 		ArrayList<Integer> trace = new ArrayList<Integer>();
@@ -97,12 +25,12 @@ public class Kruskal {
 		int origine, destination;
 
 		Collections.shuffle(list);
-		
+
 		for(Edge e : list){
 			origine = e.from;
 			destination = e.to;
 			ajouter = true;
-			System.out.println("Origine "+origine +" | Destination "+destination);
+			//System.out.println("Origine "+origine +" | Destination "+destination);
 			for(Edge e2: arbre) {
 				trace.add(e2.from);
 				trace.add(e2.to);	
@@ -110,19 +38,19 @@ public class Kruskal {
 			if(trace.contains(origine) && trace.contains(destination)) {
 				if(!verifierSeparation(e, arbre)) {
 					ajouter = false;
-					System.out.println("cut de "+e.from+"---"+e.to);
+					//System.out.println("cut de "+e.from+"---"+e.to);
 				}
-				
+
 			}	
 			if(ajouter) {
-				System.out.println("ajout de "+e.from+"---"+e.to);
+				//System.out.println("ajout de "+e.from+"---"+e.to);
 				arbre.add(e);
 			}
 		}
 		return arbre;
 	}
-	
-	public boolean verifierSeparation(Edge ed, ArrayList<Edge> arbre) {
+
+	public static boolean verifierSeparation(Edge ed, ArrayList<Edge> arbre) {
 		HashMap<Edge,Boolean> verification = new HashMap<Edge,Boolean >();
 		ArrayList<Integer> trace = new ArrayList<Integer>();
 		boolean modification = true;
@@ -160,8 +88,8 @@ public class Kruskal {
 			return false;
 		}
 	}
-	
-		public int kruskal2HashCode(Graph g){
+
+	public static int kruskalHashCode(Graph g){
 		ArrayList<Edge> list = g.edges();
 		ArrayList<Edge> arbre = new ArrayList<Edge>();
 		ArrayList<Integer> trace = new ArrayList<Integer>();
@@ -175,12 +103,12 @@ public class Kruskal {
 			premiersId++;
 			edgeId.put(e, premiers[premiersId]);
 		}
-		
+
 		Collections.shuffle(list);
-		
+
 		for(Edge e : list){
-			
-			
+
+
 			origine = e.from;
 			destination = e.to;
 			ajouter = true;
@@ -197,7 +125,7 @@ public class Kruskal {
 				//System.out.println("cut de "+e.from+"---"+e.to);
 			}	
 			if(ajouter) {
-			//	System.out.println("ajout de "+e.from+"---"+e.to);
+				//	System.out.println("ajout de "+e.from+"---"+e.to);
 				arbre.add(e);
 				hashCode = hashCode * edgeId.get(e);
 			}
@@ -206,28 +134,25 @@ public class Kruskal {
 		return hashCode;
 		//return arbre;
 	}
-	public void kruskalXFois(int nb){
+
+
+	public static void kruskalXFois(int nb){
 		HashMap<Integer,Integer> stats = new HashMap<Integer,Integer>();
 		Integer resultat;
 		for(int i = 0; i < nb; i++){
-			resultat = kruskal2HashCode(Graph.example());
+			resultat = kruskalHashCode(Graph.example());
 			if(stats.containsKey(resultat)){
 				stats.put(resultat, stats.get(resultat) +1);
 			}else{
 				stats.put(resultat, 1);
 			}
-			
+
 		}
 		for(Integer i : stats.keySet()){
 			System.out.println("arbre de code "+i+" : "+stats.get(i));
 		}
 	}
-	
-	
-	
 
-	
-	
-	
-	
+
+
 }

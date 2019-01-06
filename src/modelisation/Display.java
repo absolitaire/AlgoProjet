@@ -7,8 +7,10 @@ public class Display extends JFrame {
     boolean visible;
     public  Display() {
         super("Image");       // Titre de la fenêtre
-        setPreferredSize(new Dimension(400, 500));  // largeur, hauteur
+        //setPreferredSize(new Dimension(400, 500));  // largeur, hauteur
 
+        setPreferredSize(new Dimension(1000, 1000));
+        
         jlabel = new JLabel();
 	visible = false;
         this.add(jlabel, BorderLayout.CENTER);
