@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 
 public class Labyrinthe {
 
-	public  final static int TAILLE = 6;
+	public  final static int TAILLE = 20;
 
 	public static void main(String[] args) {
 
@@ -34,10 +34,10 @@ public class Labyrinthe {
 				n++;
 			}
 			if(cmd == 1){
-				for(Edge e : Kruskal.kruskal(Graph.Grid(TAILLE))){
+				/*for(Edge e : Kruskal.kruskal(Graph.Grid(TAILLE))){
 					g.addEdge(e);
-				};
-				/*
+				};*/
+				
 				int culDeSacs = 0; 
 				int sommeCulsDeSacs = 0;
 				int sommeDistance = 0;
@@ -81,7 +81,7 @@ public class Labyrinthe {
 					sommeDistance += parcoursLabyrinthe(gr, 0, 0, -1);
 				}
 				
-				*/
+				
 			}else{
 				for(Edge e : Wilson.wilson(Graph.Grid(TAILLE))){
 					g.addEdge(e);
@@ -134,9 +134,9 @@ public class Labyrinthe {
 				sommeDistance += parcoursLabyrinthe(g, 0, 0, -1);
 			}
 
-			System.out.println("Moyenne de culs de sac:"+sommeCulsDeSacs/nbFois);
+			System.out.println("Moyenne de culs de sac: "+sommeCulsDeSacs/nbFois);
 
-			System.out.println("Moyenne de distance de l'entree a la sortie:"+sommeDistance/nbFois);
+			System.out.println("Moyenne de distance de l'entree a la sortie: "+sommeDistance/nbFois);
 
 		}
 
@@ -147,7 +147,7 @@ public class Labyrinthe {
 
 
 	public static int parcoursLabyrinthe(Graph g, int dist, int position, int precedent){
-		System.out.println(dist+" "+position+" "+precedent);
+		//System.out.println(dist+" "+position+" "+precedent);
 		if(position == TAILLE * TAILLE -1) return dist;
 		int resultat = -1;
 		for(Edge e : g.adj(position)){
