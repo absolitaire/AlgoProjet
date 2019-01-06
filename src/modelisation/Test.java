@@ -113,7 +113,8 @@ public class Test{
     
     public static void main(String[] args) {
 	int size = 4;
-	Graph G = Graph.Grid(size);
+	//Graph G = Graph.Grid(size);
+	Graph G = Graph.example();
 	Display d = new Display();
 	d.setImage(G.toImage());
 	System.out.println("appuyez sur une touche");
