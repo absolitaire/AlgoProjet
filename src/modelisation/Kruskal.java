@@ -50,7 +50,7 @@ public class Kruskal {
 		return arbre;
 	}
 
-	public static boolean verifierSeparation(Edge ed, ArrayList<Edge> arbre) {
+	public static boolean verifierSeparationOld(Edge ed, ArrayList<Edge> arbre) {
 		HashMap<Edge,Boolean> verification = new HashMap<Edge,Boolean >();
 		ArrayList<Integer> trace = new ArrayList<Integer>();
 		boolean modification = true;
@@ -87,6 +87,61 @@ public class Kruskal {
 		}else{
 			return false;
 		}
+	}
+	
+	public static boolean verifierSeparation(Edge ed, ArrayList<Edge> arbre) {
+		HashMap<Edge,Boolean> verification = new HashMap<Edge,Boolean >();
+		ArrayList<Integer> trace = new ArrayList<Integer>();
+		ArrayList<ArrayList<Integer>> stock = new ArrayList<ArrayList<Integer>>();
+		boolean modification = true;
+		int nombreVal = 0;
+		
+		for (Edge e : arbre) {
+			nombreVal += 1;
+			verification.put(e, false);
+		}
+		
+		Set<Edge> iterator = verification.keySet();
+		
+		while(nombreVal > 0) {
+			trace = new ArrayList<Integer>();
+			modification = true;
+			
+			while(modification) {
+				for(Edge e2: iterator) {
+					if(! verification.get(e2) && modification) {
+							trace.add(e2.from);
+							trace.add(e2.to);
+							verification.put(e2, true);
+							modification = false;
+							nombreVal -= 1;
+					}
+				}
+			}
+
+			modification = true;
+			while(modification) {
+				modification = false;
+				for(Edge e2: iterator) {
+					if(! verification.get(e2)) {
+						if(trace.contains(e2.from) || trace.contains(e2.to) ) {
+							trace.add(e2.from);
+							trace.add(e2.to);
+							verification.put(e2, true);
+							modification = true;
+							nombreVal -= 1;
+						}
+					}
+				}
+			}
+			stock.add(trace);
+		}
+		for(ArrayList<Integer> t: stock) {
+			if(t.contains(ed.from) && t.contains(ed.to)) {		
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public static int kruskalHashCode(Graph g){
