@@ -11,9 +11,8 @@ public class Wilson {
 			127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229};
 
 	public static void main(String[] args){
-		//new Kruskal().kruskal2HashCode(Graph.example());
 		wilsonXFois(1000000);
-		
+
 	}
 
 
@@ -33,6 +32,9 @@ public class Wilson {
 		int premiersId = -1;
 		int hashCode = 1;
 
+		//On associe a chaque arete un nombre premier.
+		//L'arbre couvrant sera donc un produit de nombre premiers, donc l'ordre d'apparition des Edge ne changera pas le resultat,
+		//mais deux arbres differents ne pourront jamais donner le meme hashcode.
 		for(Edge e : list){
 			premiersId++;
 			edgeId.put(e, premiers[premiersId]);
